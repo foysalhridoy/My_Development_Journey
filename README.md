@@ -1,101 +1,68 @@
-# 🚀 My_Development_Journey
+# Table Fan Animation using HTML & CSS
 
-<p align="center">
-  <img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExY2hicXVmdjBpbGc3YWN6NDRoaXJyZXJxZXk3c3I4ZmNvOTBmeGFiMyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/L8K62iTDkzGX6/giphy.gif" alt="Coding GIF" width="100%" />
-</p>
-
-Welcome to **My_Development_Journey** — a curated portfolio of my learning and projects in web and software development.
+A simple and elegant **table fan animation** created purely with **HTML and CSS**. The fan blades rotate smoothly in an infinite loop to mimic a real fan without any JavaScript.
 
 ---
 
-## 📖 About This Repository
+## Preview
 
-This repository is a reflection of my continuous growth as a developer. It contains various projects and experiments that demonstrate my skills in:
-
-- **Frontend:** HTML5, CSS3, JavaScript (ES6+)
-- **Backend:** Server-side scripting, APIs, and database integration
-- **Tools & Technologies:** Version control with Git, responsive design principles, and more
-
-Every project here marks a milestone in my development journey, showcasing real-world applications and coding best practices.
+![Fan Animation](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNWVoeDViNGpkYXY2enN3M2pkcDBhcGk5MHVxMjMwcWNiamx5Z3pqaCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l4hLVfpZQf1Ca0bhm/giphy.gif)
 
 ---
 
-## ✨ Key Features
+## Project Overview
 
-- Clean, semantic, and accessible code
-- Responsive and interactive web pages
-- Practical use of JavaScript for dynamic content
-- Backend connectivity and data handling
-- Well-organized project structure for easy navigation
+This project demonstrates CSS animations by rotating fan blades inside a circular frame. The animation uses CSS `@keyframes` for smooth rotation, combined with HTML structure to create a realistic table fan design.
 
 ---
 
-## 📂 Repository Structure
+## Features
 
-```bash
-├── Python/
-│   ├── basics/
-│   ├── projects/
-│   └── algorithms/
-│
-├── Java/
-│   ├── oop/
-│   ├── projects/
-│   └── dsa/
-│
-├── WebDevelopment/
-│   ├── HTML/
-│   ├── CSS/
-│   ├── JavaScript/
-│   └── MiniProjects/
-│
-└── README.md
-```
----
-
-## 🛠️ Technologies Used
-
-- HTML5 & CSS3
-- JavaScript (ES6+)
-- Node.js / Express (optional backend)
-- Git & GitHub for version control
-- Any other tools/frameworks you have used (add here)
+- Continuous rotation animation using CSS only
+- Simple structure and clean design
+- Easy to customize blade count, colors, and speed
+- No JavaScript needed
 
 ---
 
-## 🎯 Goals
+## Installation and Usage
 
-- To build solid foundations in both frontend and backend development
-- To develop real-world projects that solve practical problems
-- To improve coding standards, readability, and maintainability
-- To share knowledge and code openly for collaboration and feedback
-
----
-
-## 📊 Badges
-
-![GitHub Repo stars](https://img.shields.io/github/stars/foysalhridoy/My_Development_Journey?style=social)
-![GitHub forks](https://img.shields.io/github/forks/foysalhridoy/My_Development_Journey?style=social)
-![GitHub last commit](https://img.shields.io/github/last-commit/foysalhridoy/My_Development_Journey)
-![GitHub language count](https://img.shields.io/github/languages/count/foysalhridoy/My_Development_Journey)
-![GitHub top language](https://img.shields.io/github/languages/top/foysalhridoy/My_Development_Journey)
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/table-fan-animation.git
 
 ---
 
-## 📈 Contribution Graph
+What You Will Learn
+How to use CSS keyframe animations (@keyframes)
 
-This repository will grow with my continuous practice. Stay tuned for updates! 🌱  
+How to use transform-origin and rotate for animations
 
-![GitHub Activity Graph](https://github-readme-activity-graph.vercel.app/graph?username=foysalhridoy&theme=github-compact)
+Positioning elements with CSS for complex layouts
 
----
-
-## 🤝 Connect with Me
-
-* 📧 Email: [ffoysalhridoy@gmail.com](mailto:ffoysalhridoy@gmail.com)  
-* 💼 LinkedIn: [md-ferdous-foysal-hridoy](https://www.linkedin.com/in/md-ferdous-foysal-hridoy-43758a319/)  
-* 🐙 GitHub: [foysalhridoy](https://github.com/foysalhridoy)
+Creating animations without JavaScript
 
 ---
 
-⭐ If you find this repository helpful, don’t forget to give it a star!
+table-fan-animation/
+├── index.html       # HTML structure of the fan
+├── style.css        # CSS styles and animation
+└── README.md        # Project documentation
+
+---
+
+Contribution
+Contributions, issues, and feature requests are welcome! Feel free to fork the repository and submit pull requests.
+
+License
+This project is licensed under the MIT License.
+
+⭐ If you find this project helpful or interesting, please give it a star!
+
+Contact
+For questions or feedback, please open an issue or contact me via GitHub.
+
+---
+
+You can copy-paste this directly into your **README.md** file. If you want, I can also help generate the actual `index.html` and `style.css` files to complete your repo. Just say the word!
+

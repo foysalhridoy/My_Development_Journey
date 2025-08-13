@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modern Blood Donation Initiative</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <div class="container header-container">
+      <a href="#home" class="logo">BloodDonate</a>
+      <nav class="nav" id="nav">
+        <ul class="nav-list">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#why-donate" class="nav-link">Why Donate</a></li>
+          <li><a href="#campaigns" class="nav-link">Campaigns</a></li>
+          <li><a href="#events" class="nav-link">Events</a></li>
+          <li><a href="#stories" class="nav-link">Success Stories</a></li>
+          <li><a href="#register" class="nav-link">Register</a></li>
+          <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu">
+        <span class="hamburger"></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero-section" tabindex="-1">
+      <div class="container hero-content">
+        <h1 class="hero-title">Your Blood Saves Lives</h1>
+        <p class="hero-subtitle">
+          Join thousands of donors. Give the gift of life — simple, safe & impactful.
+        </p>
+        <a href="#register" class="btn btn-primary">Become a Donor</a>
+      </div>
+    </section>
+
+    <section id="why-donate" class="info-section container" tabindex="-1">
+      <h2>Why Donate Blood?</h2>
+      <div class="grid-info">
+        <article class="card card-info">
+          <h3>Critical Need</h3>
+          <p>Every 2 seconds, someone needs blood for emergencies, surgeries, or illness.</p>
+        </article>
+        <article class="card card-info">
+          <h3>Safe & Easy</h3>
+          <p>Donating blood is quick, safe, and supervised by healthcare professionals.</p>
+        </article>
+        <article class="card card-info">
+          <h3>Save Lives</h3>
+          <p>Your donation helps cancer patients, accident victims, mothers in childbirth, and more.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="campaigns" class="works-section container" tabindex="-1">
+      <h2>Our Campaigns</h2>
+      <div class="grid-works">
+        <article class="card card-works">
+          <h3>Annual Blood Drive 2025</h3>
+          <p>A nationwide campaign to encourage blood donation across all cities.</p>
+        </article>
+        <article class="card card-works">
+          <h3>Youth Awareness Program</h3>
+          <p>Educational sessions in schools and colleges to inspire young donors.</p>
+        </article>
+        <article class="card card-works">
+          <h3>Emergency Blood Bank</h3>
+          <p>Rapid-response blood banks strategically located for urgent needs.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="events" class="works-section container" tabindex="-1">
+      <h2>Upcoming Events</h2>
+      <div class="grid-works">
+        <article class="card card-works">
+          <h3>Blood Donation Camp – July 2025</h3>
+          <p>July 20th | Central Community Center</p>
+        </article>
+        <article class="card card-works">
+          <h3>Health Awareness Marathon</h3>
+          <p>Aug 5th | City Park – Join for health check-ups and donation.</p>
+        </article>
+        <article class="card card-works">
+          <h3>Donor Appreciation Gala</h3>
+          <p>Sep 12th | Grand Hall – Celebrating our heroes who donate.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="stories" class="works-section container" tabindex="-1">
+      <h2>Success Stories</h2>
+      <div class="grid-works">
+        <article class="card card-works">
+          <h3>Flood Emergency Rescue</h3>
+          <p>Donors helped save 150+ lives during last year’s flood crisis.</p>
+        </article>
+        <article class="card card-works">
+          <h3>Cancer Patient Recoveries</h3>
+          <p>Blood donations were critical in successful cancer treatments.</p>
+        </article>
+        <article class="card card-works">
+          <h3>Community Unity</h3>
+          <p>Blood donation has brought our community closer and stronger.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="register" class="form-section container" tabindex="-1">
+      <h2>Donor Registration</h2>
+      <form id="registrationForm" novalidate>
+        <div class="form-group">
+          <label for="fullName">Full Name<span aria-hidden="true">*</span></label>
+          <input type="text" id="fullName" name="fullName" placeholder="Your full name" required />
+          <small class="error-message" id="error-name"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Age<span aria-hidden="true">*</span></label>
+          <input type="number" id="age" name="age" min="18" max="65" placeholder="18 - 65" required />
+          <small class="error-message" id="error-age"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="bloodType">Blood Type<span aria-hidden="true">*</span></label>
+          <select id="bloodType" name="bloodType" required>
+            <option value="" disabled selected>Select blood type</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+          </select>
+          <small class="error-message" id="error-bloodType"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="contact">Contact Number<span aria-hidden="true">*</span></label>
+          <input
+            type="tel"
+            id="contact"
+            name="contact"
+            pattern="[0-9]{10,15}"
+            placeholder="e.g. 017XXXXXXXX"
+            required
+          />
+          <small class="error-message" id="error-contact"></small>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-full">Submit Registration</button>
+        <p id="formMessage" role="alert" aria-live="polite" class="form-message"></p>
+      </form>
+    </section>
+
+    <section id="contact" class="contact-section container" tabindex="-1">
+      <h2>Contact Us</h2>
+      <p>Questions or support? Reach us at:</p>
+      <p>Email: <a href="mailto:info@blooddonate.org">info@blooddonate.org</a></p>
+      <p>Phone: +880 1234 567 890</p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>© 2025 BloodDonate. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

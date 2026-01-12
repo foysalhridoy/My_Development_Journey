@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIU Student Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+</head>
+<body class="light-mode">
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <div class="logo-section">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <div class="logo-text">
+                        <h1>DIU Student Portal</h1>
+                        <p>Daffodil International University</p>
+                    </div>
+                </div>
+                
+                <div class="header-controls">
+                    <div class="datetime" id="datetime">
+                        <!-- Will be populated by JS -->
+                    </div>
+                    <button class="theme-toggle" id="theme-toggle" title="Toggle Dark/Light Mode">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="user-info">
+                <div class="user-avatar">
+                    <img src="https://ui-avatars.com/api/?name=Student+DIU&background=4A90E2&color=fff&bold=true" alt="Student Avatar">
+                </div>
+                <div class="user-details">
+                    <h3 id="student-name">Abdullah Al Mamun</h3>
+                    <p id="student-id">ID: 123-456-789</p>
+                    <p id="student-dept">Department: Computer Science & Engineering</p>
+                </div>
+                <button class="logout-btn" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> <span class="btn-text">Logout</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard">
+            <!-- Sidebar Navigation -->
+            <aside class="sidebar" id="sidebar">
+                <nav class="nav-menu">
+                    <ul>
+                        <li class="active" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></li>
+                        <li data-section="courses"><i class="fas fa-book"></i> <span>My Courses</span></li>
+                        <li data-section="schedule"><i class="fas fa-calendar-alt"></i> <span>Class Schedule</span></li>
+                        <li data-section="results"><i class="fas fa-chart-line"></i> <span>Results</span></li>
+                        <li data-section="attendance"><i class="fas fa-clipboard-check"></i> <span>Attendance</span></li>
+                        <li data-section="finance"><i class="fas fa-money-check-alt"></i> <span>Finance</span></li>
+                        <li data-section="library"><i class="fas fa-book-reader"></i> <span>Library</span></li>
+                        <li data-section="resources"><i class="fas fa-folder-open"></i> <span>Resources</span></li>
+                        <li data-section="settings"><i class="fas fa-cog"></i> <span>Settings</span></li>
+                    </ul>
+                </nav>
+                
+                <div class="quick-links">
+                    <h3><i class="fas fa-link"></i> <span>Quick Links</span></h3>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-external-link-alt"></i> <span>DIU Website</span></a></li>
+                        <li><a href="#"><i class="fas fa-video"></i> <span>Online Classes</span></a></li>
+                        <li><a href="#"><i class="fas fa-file-alt"></i> <span>Exam Schedule</span></a></li>
+                        <li><a href="#"><i class="fas fa-question-circle"></i> <span>Support</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="campus-news">
+                    <h3><i class="fas fa-bullhorn"></i> <span>Campus News</span></h3>
+                    <div class="news-item">
+                        <p>Final Exam Schedule Published</p>
+                        <span class="news-date">Dec 15, 2023</span>
+                    </div>
+                    <div class="news-item">
+                        <p>Semester Break: Jan 1-15</p>
+                        <span class="news-date">Dec 10, 2023</span>
+                    </div>
+                    <div class="news-item">
+                        <p>Project Submission Deadline Extended</p>
+                        <span class="news-date">Dec 5, 2023</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <!-- Dashboard Section -->
+                <div class="section active" id="dashboard-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-tachometer-alt"></i> Dashboard Overview</h2>
+                        <p>Welcome to your student portal. Here's your academic summary.</p>
+                    </div>
+                    
+                    <div class="stats-cards">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: var(--secondary-color);">
+                                <i class="fas fa-book"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Current Courses</h3>
+                                <p class="stat-number">6</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: var(--accent-color);">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>CGPA</h3>
+                                <p class="stat-number">3.75</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: var(--warning-color);">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Attendance</h3>
+                                <p class="stat-number">92%</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: var(--danger-color);">
+                                <i class="fas fa-money-check-alt"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Due Payment</h3>
+                                <p class="stat-number">৳ 5,000</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-row">
+                        <div class="content-card">
+                            <h3><i class="fas fa-calendar-day"></i> Today's Classes</h3>
+                            <div class="class-list">
+                                <div class="class-item">
+                                    <div class="class-time">10:00 AM - 11:30 AM</div>
+                                    <div class="class-details">
+                                        <h4>Data Structures & Algorithms</h4>
+                                        <p>Room: 502, Building: AB4</p>
+                                    </div>
+                                </div>
+                                <div class="class-item">
+                                    <div class="class-time">12:00 PM - 1:30 PM</div>
+                                    <div class="class-details">
+                                        <h4>Database Management System</h4>
+                                        <p>Room: 305, Building: AB3</p>
+                                    </div>
+                                </div>
+                                <div class="class-item">
+                                    <div class="class-time">2:00 PM - 3:30 PM</div>
+                                    <div class="class-details">
+                                        <h4>Web Technologies</h4>
+                                        <p>Room: 701, Building: AB5</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-card">
+                            <h3><i class="fas fa-bell"></i> Recent Notifications</h3>
+                            <div class="notification-list">
+                                <div class="notification-item">
+                                    <i class="fas fa-exclamation-circle notification-icon urgent"></i>
+                                    <div class="notification-content">
+                                        <h4>Assignment Submission</h4>
+                                        <p>Web Technologies assignment due tomorrow</p>
+                                        <span class="notification-time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <i class="fas fa-info-circle notification-icon info"></i>
+                                    <div class="notification-content">
+                                        <h4>Exam Schedule Update</h4>
+                                        <p>Final exam schedule has been published</p>
+                                        <span class="notification-time">1 day ago</span>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <i class="fas fa-check-circle notification-icon success"></i>
+                                    <div class="notification-content">
+                                        <h4>Payment Received</h4>
+                                        <p>Your semester fee payment has been confirmed</p>
+                                        <span class="notification-time">3 days ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="content-card full-width">
+                        <h3><i class="fas fa-chart-bar"></i> Academic Progress</h3>
+                        <div class="progress-chart">
+                            <canvas id="progressChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Courses Section -->
+                <div class="section" id="courses-section">
+                    <!-- Content loaded dynamically -->
+                </div>
+                
+                <!-- Schedule Section -->
+                <div class="section" id="schedule-section">
+                    <!-- Content loaded dynamically -->
+                </div>
+                
+                <!-- Results Section -->
+                <div class="section" id="results-section">
+                    <!-- Content loaded dynamically -->
+                </div>
+                
+                <!-- Attendance Section -->
+                <div class="section" id="attendance-section">
+                    <!-- Content loaded dynamically -->
+                </div>
+                
+                <!-- Finance Section -->
+                <div class="section" id="finance-section">
+                    <!-- Content loaded dynamically -->
+                </div>
+                
+                <!-- Library Section -->
+                <div class="section" id="library-section">
+                    <!-- Content loaded dynamically -->
+                </div>
+                
+                <!-- Resources Section -->
+                <div class="section" id="resources-section">
+                    <!-- Content loaded dynamically -->
+                </div>
+                
+                <!-- Settings Section -->
+                <div class="section" id="settings-section">
+                    <!-- Content loaded dynamically -->
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2023 Daffodil International University Student Portal. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Help Center</a>
+                <a href="#">Contact Us</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

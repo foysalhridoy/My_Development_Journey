@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HridQR - Professional QR Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-tertiary: #e9ecef;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --success: #10b981;
+            --danger: #ef4444;
+            --border: #dee2e6;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --card-bg: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --accent: #818cf8;
+            --accent-hover: #6366f1;
+            --success: #34d399;
+            --danger: #f87171;
+            --border: #334155;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --card-bg: #1e293b;
+        }
+
+        [data-theme="ocean"] {
+            --bg-primary: #0a1929;
+            --bg-secondary: #1a2942;
+            --bg-tertiary: #2a3f5f;
+            --text-primary: #e3f2fd;
+            --text-secondary: #90caf9;
+            --accent: #29b6f6;
+            --accent-hover: #0288d1;
+            --success: #26c6da;
+            --danger: #ef5350;
+            --border: #2a3f5f;
+            --shadow: rgba(0, 0, 0, 0.4);
+            --card-bg: #1a2942;
+        }
+
+        [data-theme="sunset"] {
+            --bg-primary: #2d1b2e;
+            --bg-secondary: #3d2b3e;
+            --bg-tertiary: #4d3b4e;
+            --text-primary: #fce4ec;
+            --text-secondary: #f48fb1;
+            --accent: #ec407a;
+            --accent-hover: #d81b60;
+            --success: #ab47bc;
+            --danger: #ff5252;
+            --border: #4d3b4e;
+            --shadow: rgba(0, 0, 0, 0.4);
+            --card-bg: #3d2b3e;
+        }
+
+        [data-theme="forest"] {
+            --bg-primary: #1a2e1a;
+            --bg-secondary: #2a3e2a;
+            --bg-tertiary: #3a4e3a;
+            --text-primary: #e8f5e9;
+            --text-secondary: #a5d6a7;
+            --accent: #66bb6a;
+            --accent-hover: #43a047;
+            --success: #81c784;
+            --danger: #e57373;
+            --border: #3a4e3a;
+            --shadow: rgba(0, 0, 0, 0.4);
+            --card-bg: #2a3e2a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .theme-switcher {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 8px;
+            background: var(--card-bg);
+            padding: 8px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        .theme-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .theme-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .theme-btn.active {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        .theme-btn[data-theme="light"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .theme-btn[data-theme="dark"] {
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+        }
+
+        .theme-btn[data-theme="ocean"] {
+            background: linear-gradient(135deg, #29b6f6 0%, #0277bd 100%);
+        }
+
+        .theme-btn[data-theme="sunset"] {
+            background: linear-gradient(135deg, #f48fb1 0%, #d81b60 100%);
+        }
+
+        .theme-btn[data-theme="forest"] {
+            background: linear-gradient(135deg, #81c784 0%, #388e3c 100%);
+        }
+
+        .container {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 25px;
+            padding: 25px;
+            padding-top: 80px;
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 20px 60px var(--shadow);
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .header {
+            margin-bottom: 30px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .logo {
+            width: 55px;
+            height: 55px;
+            background: var(--accent);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s;
+        }
+
+        .logo:hover {
+            transform: rotate(10deg) scale(1.05);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding-right: 10px;
+        }
+
+        .content-area::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content-area::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+
+        .content-area::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--bg-primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .input-field::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .control-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        select, input[type="color"] {
+            padding: 12px 14px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236c757d' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            padding-right: 35px;
+        }
+
+        input[type="color"] {
+            height: 45px;
+            padding: 5px;
+        }
+
+        select:focus, input[type="color"]:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: var(--bg-primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .file-upload {
+            display: block;
+            padding: 14px;
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .file-upload:hover {
+            border-color: var(--accent);
+            background: var(--bg-tertiary);
+            color: var(--accent);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .output-display {
+            padding: 35px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            text-align: center;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--border);
+        }
+
+        #qrcode {
+            margin: 20px 0;
+            padding: 25px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            display: inline-block;
+        }
+
+        #qrcode canvas {
+            border-radius: 12px;
+            display: block;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn-secondary {
+            padding: 12px 24px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-share {
+            background: var(--accent);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-share:hover {
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .history-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+        }
+
+        .btn-clear {
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            color: var(--danger);
+            border: 2px solid var(--danger);
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .btn-clear:hover {
+            background: var(--danger);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 18px;
+        }
+
+        .history-card {
+            background: var(--bg-secondary);
+            border-radius: 14px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid var(--border);
+        }
+
+        .history-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--shadow);
+            border-color: var(--accent);
+        }
+
+        .history-card img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            background: white;
+            padding: 8px;
+        }
+
+        .history-text {
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            word-break: break-all;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .history-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--accent);
+            color: white;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .history-time {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        .btn-delete {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .history-card:hover .btn-delete {
+            opacity: 1;
+        }
+
+        .btn-delete:hover {
+            transform: scale(1.15);
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-secondary);
+            padding: 60px 20px;
+            font-size: 1.1rem;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .toast {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--success);
+            color: white;
+            padding: 16px 28px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            z-index: 1000;
+            display: none;
+            font-weight: 600;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                padding-top: 80px;
+            }
+
+            .panel {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .theme-switcher {
+                top: 15px;
+                right: 15px;
+            }
+
+            .history-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <div class="theme-switcher">
+        <button class="theme-btn active" data-theme="light" onclick="setTheme('light')" title="Light Theme"></button>
+        <button class="theme-btn" data-theme="dark" onclick="setTheme('dark')" title="Dark Theme"></button>
+        <button class="theme-btn" data-theme="ocean" onclick="setTheme('ocean')" title="Ocean Theme"></button>
+        <button class="theme-btn" data-theme="sunset" onclick="setTheme('sunset')" title="Sunset Theme"></button>
+        <button class="theme-btn" data-theme="forest" onclick="setTheme('forest')" title="Forest Theme"></button>
+    </div>
+
+    <div class="toast" id="toast">✨ QR Code Generated!</div>
+
+    <div class="container">
+        <div class="panel">
+            <div class="header">
+                <div class="brand">
+                    <div class="logo">⚡</div>
+                    <h1>HridQR</h1>
+                </div>
+                <p class="subtitle">Professional QR Code Generator</p>
+            </div>
+
+            <div class="content-area">
+                <div class="section">
+                    <div class="section-title">Content</div>
+                    <input type="text" class="input-field" id="qr-input" placeholder="Enter your text or URL here...">
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Customization</div>
+                    <div class="controls-grid">
+                        <div class="control-group">
+                            <label class="control-label">Size</label>
+                            <select id="qr-size">
+                                <option value="200">Small</option>
+                                <option value="300" selected>Medium</option>
+                                <option value="400">Large</option>
+                                <option value="500">X-Large</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Color</label>
+                            <input type="color" id="qr-color" value="#000000">
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Background</label>
+                            <input type="color" id="qr-bg" value="#ffffff">
+                        </div>
+                        <div class="control-group full">
+                            <label class="control-label">Logo (Optional)</label>
+                            <input type="file" id="qr-logo" accept="image/*" style="display: none;">
+                            <label for="qr-logo" class="file-upload">
+                                <span id="logo-filename">📷 Choose Logo</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <button class="btn-primary" onclick="generateQR()">⚡ Generate QR Code</button>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">Preview</div>
+                    <div class="output-display">
+                        <div id="qrcode"></div>
+                        <div class="btn-group" id="download-options" style="display: none;">
+                            <button class="btn-secondary" onclick="downloadAs('png')">📥 PNG</button>
+                            <button class="btn-secondary" onclick="downloadAs('jpg')">📥 JPG</button>
+                            <button class="btn-secondary btn-share" onclick="shareQR()">📤 Share</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel">
+            <div class="history-header">
+                <h2 class="history-title">📜 History</h2>
+                <button class="btn-clear" onclick="clearHistory()">Clear All</button>
+            </div>
+            <div class="content-area">
+                <div class="history-grid" id="history-grid">
+                    <div class="empty-state">
+                        <div class="empty-icon">🎨</div>
+                        <div>No QR codes yet<br>Create your first one!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let history = [];
+        let currentQRData = null;
+        let logoImage = null;
+
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            document.querySelectorAll('.theme-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-theme="${theme}"]`).classList.add('active');
+            localStorage.setItem('theme', theme);
+        }
+
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
+
+        document.getElementById('qr-logo').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                document.getElementById('logo-filename').textContent = '✅ ' + file.name;
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    logoImage = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        function generateQR() {
+            const input = document.getElementById('qr-input').value.trim();
+            const size = parseInt(document.getElementById('qr-size').value);
+            const color = document.getElementById('qr-color').value;
+            const bgColor = document.getElementById('qr-bg').value;
+            const qrcodeDiv = document.getElementById('qrcode');
+            
+            qrcodeDiv.innerHTML = '';
+            
+            if (!input) {
+                alert('⚠️ Please enter some text or URL!');
+                return;
+            }
+
+            new QRCode(qrcodeDiv, {
+                text: input,
+                width: size,
+                height: size,
+                colorDark: color,
+                colorLight: bgColor,
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            showToast();
+            
+            setTimeout(() => {
+                const canvas = qrcodeDiv.querySelector('canvas');
+                if (canvas) {
+                    if (logoImage) {
+                        addLogoToQR(canvas, logoImage);
+                    }
+                    
+                    currentQRData = canvas.toDataURL();
+                    document.getElementById('download-options').style.display = 'flex';
+                    
+                    const settings = {
+                        size: size,
+                        color: color,
+                        bgColor: bgColor,
+                        hasLogo: !!logoImage
+                    };
+                    
+                    addToHistory(input, currentQRData, settings);
+                }
+            }, 100);
+        }
+
+        function addLogoToQR(canvas, logoSrc) {
+            const ctx = canvas.getContext('2d');
+            const img = new Image();
+            img.onload = function() {
+                const logoSize = canvas.width * 0.2;
+                const x = (canvas.width - logoSize) / 2;
+                const y = (canvas.height - logoSize) / 2;
+                
+                ctx.fillStyle = 'white';
+                ctx.fillRect(x - 5, y - 5, logoSize + 10, logoSize + 10);
+                
+                ctx.drawImage(img, x, y, logoSize, logoSize);
+                currentQRData = canvas.toDataURL();
+            };
+            img.src = logoSrc;
+        }
+
+        function downloadAs(format) {
+            if (!currentQRData) return;
+            
+            const canvas = document.querySelector('#qrcode canvas');
+            let dataUrl = currentQRData;
+            
+            if (format === 'jpg') {
+                const newCanvas = document.createElement('canvas');
+                newCanvas.width = canvas.width;
+                newCanvas.height = canvas.height;
+                const ctx = newCanvas.getContext('2d');
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+                ctx.drawImage(canvas, 0, 0);
+                dataUrl = newCanvas.toDataURL('image/jpeg', 0.95);
+            }
+            
+            const link = document.createElement('a');
+            link.download = `qrcode.${format}`;
+            link.href = dataUrl;
+            link.click();
+        }
+
+        function shareQR() {
+            if (!currentQRData) return;
+            
+            fetch(currentQRData)
+                .then(res => res.blob())
+                .then(blob => {
+                    const file = new File([blob], 'qrcode.png', { type: 'image/png' });
+                    
+                    if (navigator.share && navigator.canShare({ files: [file] })) {
+                        navigator.share({
+                            files: [file],
+                            title: 'QR Code',
+                            text: 'Check out this QR code!'
+                        }).catch(err => console.log('Share cancelled'));
+                    } else {
+                        const canvas = document.querySelector('#qrcode canvas');
+                        canvas.toBlob(blob => {
+                            navigator.clipboard.write([
+                                new ClipboardItem({ 'image/png': blob })
+                            ]).then(() => {
+                                alert('✅ QR Code copied to clipboard!');
+                            }).catch(() => {
+                                alert('❌ Sharing not supported. Use download instead.');
+                            });
+                        });
+                    }
+                });
+        }
+
+        function addToHistory(text, imageData, settings) {
+            const historyItem = {
+                text: text,
+                image: imageData,
+                timestamp: new Date().toLocaleString(),
+                settings: settings
+            };
+            
+            history.unshift(historyItem);
+            
+            if (history.length > 50) {
+                history = history.slice(0, 50);
+            }
+            
+            updateHistoryDisplay();
+        }
+
+        function updateHistoryDisplay() {
+            const grid = document.getElementById('history-grid');
+            
+            if (history.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🎨</div>
+                        <div>No QR codes yet<br>Create your first one!</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            grid.innerHTML = history.map((item, index) => `
+                <div class="history-card" onclick="downloadImage('${item.image}', 'qrcode_${index}.png')">
+                    <button class="btn-delete" onclick="event.stopPropagation(); deleteHistoryItem(${index})">✕</button>
+                    <span class="history-badge">${item.settings.size}px</span>
+                    <img src="${item.image}" alt="QR Code">
+                    <div class="history-text">${item.text.substring(0, 30)}${item.text.length > 30 ? '...' : ''}</div>
+                    <div class="history-time">${item.timestamp}</div>
+                </div>
+            `).join('');
+        }
+
+        function deleteHistoryItem(index) {
+            history.splice(index, 1);
+            updateHistoryDisplay();
+        }
+
+        function clearHistory() {
+            if (confirm('🗑️ Clear all history?')) {
+                history = [];
+                updateHistoryDisplay();
+            }
+        }
+
+        function downloadImage(dataUrl, filename) {
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = dataUrl;
+            link.click();
+        }
+
+        document.getElementById('qr-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                generateQR();
+            }
+        });
+    </script>
+</body>
+</html>
